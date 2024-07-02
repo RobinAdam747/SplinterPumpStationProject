@@ -6,7 +6,7 @@
 void setup() {
   // put your setup code here, to run once:
   // Serial.begin(115200);
-  Serial.begin(9600;
+  Serial.begin(9600);
 
   // UART setup
   // const uart_port_t uart_num = UART_NUM_2;
