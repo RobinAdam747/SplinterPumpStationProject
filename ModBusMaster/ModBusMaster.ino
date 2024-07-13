@@ -1,6 +1,6 @@
 #include <ModbusMaster.h>
 ModbusMaster node;
-HardwareSerial modbusSerial(1);
+HardwareSerial modbusSerial(2);
 
 void setup() {
     Serial.begin(115200);
