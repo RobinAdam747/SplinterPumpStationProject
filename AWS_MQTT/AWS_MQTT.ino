@@ -61,7 +61,7 @@ void publishMessage()
 {
   StaticJsonDocument<200> doc;
   doc["DI_01"] = h;
-  doc["tDI_02"] = t;
+  doc["DI_02"] = t;
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
  
@@ -87,19 +87,12 @@ void setup()
  
 void loop()
 {
-  h = 10;
-  t = 25;
+  h = millis();
+  t = millis()*2;
  
- 
-  if (isnan(h) || isnan(t) )  // Check if any reads failed and exit early (to try again).
-  {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
- 
-  Serial.print(F("Humidity: "));
+  Serial.print(F("DI_01: "));
   Serial.print(h);
-  Serial.print(F("%  Temperature: "));
+  Serial.print(F("DI_02: "));
   Serial.print(t);
   Serial.println(F("°C "));
  

@@ -3,8 +3,8 @@
 #define SECRET
 #define THINGNAME "ESP32_MQTT"
  
-const char WIFI_SSID[] = "SSID";
-const char WIFI_PASSWORD[] = "Password";
+const char WIFI_SSID[] = "Oompaloompa Storage Facility";
+const char WIFI_PASSWORD[] = "Bananas123";
 const char AWS_IOT_ENDPOINT[] = "a1rxjqrwt89eaj-ats.iot.eu-west-1.amazonaws.com";
  
 // Amazon Root CA 1
