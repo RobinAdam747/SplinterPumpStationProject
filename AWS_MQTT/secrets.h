@@ -1,12 +1,12 @@
 #include <pgmspace.h>
- 
+
 #define SECRET
 #define THINGNAME "ESP32_MQTT"
- 
-const char WIFI_SSID[] = "Oompaloompa Storage Facility";
-const char WIFI_PASSWORD[] = "Bananas123";
+
+const char WIFI_SSID[] = "SSID";
+const char WIFI_PASSWORD[] = "Password";
 const char AWS_IOT_ENDPOINT[] = "a1rxjqrwt89eaj-ats.iot.eu-west-1.amazonaws.com";
- 
+
 // Amazon Root CA 1
 static const char AWS_CERT_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -30,7 +30,7 @@ o/ufQJVtMVT8QtPHRh8jrdkPSHCa2XV4cdFyQzR1bldZwgJcJmApzyMZFo6IQ6XU
 rqXRfboQnoZsG4q5WTP468SQvvG5
 -----END CERTIFICATE-----
 )EOF";
- 
+
 // Device Certificate                                               //change this
 static const char AWS_CERT_CRT[] PROGMEM = R"KEY(
 -----BEGIN CERTIFICATE-----
@@ -57,7 +57,7 @@ hHiE+aWjIxjKESn8u0MB0lM60yI0Cfy59RSK20JFCwMKwlVdcG4+BzAtQdpU
  
  
 )KEY";
- 
+
 // Device Private Key                                               //change this
 static const char AWS_CERT_PRIVATE[] PROGMEM = R"KEY(
 -----BEGIN RSA PRIVATE KEY-----
