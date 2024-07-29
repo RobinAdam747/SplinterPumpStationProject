@@ -5,6 +5,7 @@
   - Implement modem stuff (right now, MQTT is just handled by the ESP)
   - Add timestamp fetching for the JSON
   - Implement thresholds
+  - Implement text messages and such
   - Other small details
 */
 
