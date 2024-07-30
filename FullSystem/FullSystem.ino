@@ -3,9 +3,11 @@
   - Set loggerID value
   - Set observation names (Digital Input names)
   - Implement modem stuff (right now, MQTT is just handled by the ESP)
-  - Add timestamp fetching for the JSON
+  - Add timestamp fetching for the JSON 
   - Implement thresholds
   - Implement text messages and such
+  - Implement Voltage line sensor
+  - Implement 3 colored LED light indicating thresholds etc
   - Other small details
 */
 
@@ -15,6 +17,8 @@
 #include <ArduinoJson.h>
 #include "WiFi.h"
 #include <ModbusMaster.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 
 // Modbus Slave ID and communication settings
 #define SLAVE_ID 1
@@ -26,6 +30,8 @@ ModbusMaster node;  // Modbus Master instance
 
 WiFiClientSecure net = WiFiClientSecure();
 PubSubClient client(net);
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
 
 // MQTT Configuration
 const char* type = "Pump_Station_1";
@@ -42,10 +48,15 @@ const char* observationNames[] = {
 };
 float digitalInput[8];  // Digital Input data array
 
+String formattedDate;
+String dayStamp;
+String timeStamp;
+
 void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
   connectWiFi();
   connectMQTT();
+  connectNTP();
   Serial2.begin(MODEM_BAUD_RATE, SERIAL_8N2, 16, 17);  // RX 16, TX 17
   node.begin(SLAVE_ID, Serial2);
   delay(1000);
@@ -86,6 +97,11 @@ void connectMQTT() {
   } else {
     Serial.println("MQTT broker connection failed!");
   }
+}
+
+void connectNTP() {
+  timeClient.begin();
+  timeClient.setTimeOffset(7200); // GMT+2
 }
 
 // Ensure MQTT connection
@@ -153,4 +169,19 @@ void readWellPro() {
     Serial.print("Failed to read registers. Error: ");
     Serial.println(result);
   }
+}
+
+String getTimeStamp() {
+  while(!timeClient.update()) {
+    timeClient.forceUpdate();
+  }
+
+  formattedDate = timeClient.getFormattedDate();
+  int splitT = formattedDate.indexOf("T");
+  dayStamp = formattedDate.substring(0, splitT);
+  timeStamp = formattedDate.substring(splitT+1, formattedDate.length()-1);
+  
+  String timestamp = dayStamp + " " + timeStamp;
+  Serial.println(timestamp);
+  delay(1000);
 }
