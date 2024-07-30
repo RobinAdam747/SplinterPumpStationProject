@@ -128,7 +128,7 @@ void publishMessage() {
   }
 
   JsonObject observations = properties.createNestedObject("observations");
-  String timestamp = "2023-08-08T13:55:00Z";  // Replace with fetch timestamp from modem
+  String timestamp = getTimeStamp();
   JsonArray observationValues = observations.createNestedArray(timestamp);
   for (const float di : digitalInput) {
     observationValues.add(di);
@@ -184,4 +184,6 @@ String getTimeStamp() {
   String timestamp = dayStamp + " " + timeStamp;
   Serial.println(timestamp);
   delay(1000);
+
+  return timestamp;
 }
