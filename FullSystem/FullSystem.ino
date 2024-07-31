@@ -95,8 +95,12 @@ void readWellPro() {
 
 String fetchTimestamp() {
   // Send AT command to get the current timestamp
-  Serial2.println("AT+CCLK?\n");
+  Serial2.print("+++a");
+  Serial2.write(13);  // Send Carriage Return (CR)
   delay(100);  // Wait for the modem to respond
+  Serial2.print("AT+CCLK?");
+  Serial2.write(13);  // Send Carriage Return (CR)
+  delay(100);  // Wait for the modem to respond+++a
 
   // Read the response
   String response = "";
