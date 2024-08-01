@@ -34,7 +34,8 @@ const char* observationNames[] = {
 };
 float digitalInput[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };  // Digital Input data array
 
-void setup() {WELLPRO_BAUD_RATE);
+void setup() {
+  Serial.begin(WELLPRO_BAUD_RATE);
   Serial2.begin(MODEM_BAUD_RATE, SERIAL_8N2, RS485_RX_PIN, RS485_TX_PIN);
   node.begin(WELLPRO_SLAVE_ID, Serial);
   delay(1000);
