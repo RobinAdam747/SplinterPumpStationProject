@@ -2,10 +2,8 @@
   TODO:
   - Set loggerID value
   - Set observation names (Digital Input names)
-  - Add timestamp fetching for the JSON
   - Implement thresholds
   - Implement text messages and such
-  - Other small details
 */
 
 #include <ArduinoJson.h>
@@ -82,7 +80,7 @@ bool readWellPro() {
       digitalInput[i] = node.getResponseBuffer(i);
       return true;
     }
-  } 
+  }
   return false;
 }
 
