@@ -12,9 +12,9 @@
 #include <ModbusMaster.h>
 
 // Modbus Slave ID and communication settings
-#define SLAVE_ID 1
-#define SERIAL_BAUD_RATE 115200
-#define MODEM_BAUD_RATE 9600
+#define WELLPRO_SLAVE_ID 1
+#define WELLPRO_BAUD_RATE 9600
+#define MODEM_BAUD_RATE 115200
 #define RS485_RX_PIN 16
 #define RS485_TX_PIN 17
 #define JSON_SIZE 2048
@@ -34,18 +34,18 @@ const char* observationNames[] = {
   "Observation_Name_7",
   "Observation_Name_8"
 };
-float digitalInput[8] = {0,0,0,0,0,0,0,0};  // Digital Input data array
+float digitalInput[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };  // Digital Input data array
 
-void setup() {
-  Serial.begin(SERIAL_BAUD_RATE);
+void setup() {WELLPRO_BAUD_RATE);
   Serial2.begin(MODEM_BAUD_RATE, SERIAL_8N2, RS485_RX_PIN, RS485_TX_PIN);
-  node.begin(SLAVE_ID, Serial2);
+  node.begin(WELLPRO_SLAVE_ID, Serial);
   delay(1000);
 }
 
 void loop() {
-  readWellPro();
-  publishMessage();
+  bool readSuccess = readWellPro();
+  if (readSuccess)
+    publishMessage();
   delay(1000);
 }
 
@@ -70,37 +70,30 @@ void publishMessage() {
   for (const float di : digitalInput) {
     observationValues.add(di);
   }
-  Serial.println(timestamp);
   serializeJson(doc, jsonBuffer);
-  // Enable transmit mode
-  //Serial2.print(jsonBuffer);
-  // Print to Serial Monitor for debugging
-  //Serial.println("Sent JSON: " + String(jsonBuffer));
+  Serial2.print(jsonBuffer);
 }
 
 // Read data from Well Pro sensor
-void readWellPro() {
+bool readWellPro() {
   uint8_t result = node.readInputRegisters(0x0001, 8);
   if (result == node.ku8MBSuccess) {
-    Serial.println("Read successful:");
     for (int i = 0; i < 8; i++) {
       digitalInput[i] = node.getResponseBuffer(i);
-      Serial.printf("DI_%02d: %f\n", i + 1, digitalInput[i]);
+      return true;
     }
-  } else {
-    Serial.print("Failed to read registers. Error: ");
-    Serial.println(result);
-  }
+  } 
+  return false;
 }
 
 String fetchTimestamp() {
   // Send AT command to get the current timestamp
   Serial2.print("+++a");
   Serial2.write(13);  // Send Carriage Return (CR)
-  delay(100);  // Wait for the modem to respond
+  delay(100);         // Wait for the modem to respond
   Serial2.print("AT+CCLK?");
   Serial2.write(13);  // Send Carriage Return (CR)
-  delay(100);  // Wait for the modem to respond+++a
+  delay(100);         // Wait for the modem to respond+++a
 
   // Read the response
   String response = "";
