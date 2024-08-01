@@ -107,22 +107,15 @@ String fetchTimestamp() {
   if (startIndex != -1 && endIndex != -1) {
     String timestamp = response.substring(startIndex + 1, endIndex);
 
-    // Convert the timestamp to the desired format if necessary
-    return convertTimestampFormat(timestamp);
+    // Convert the modem timestamp format to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+    // Modem timestamp format: "yy/MM/dd,HH:mm:ss±zz"
+
+    String year = "20" + timestamp.substring(0, 2);
+    String month = timestamp.substring(3, 5);
+    String day = timestamp.substring(6, 8);
+    String time = timestamp.substring(9, 17);
+    return year + "-" + month + "-" + day + "T" + time + "Z";
   }
 
   return "Timestamp not available";
-}
-
-String convertTimestampFormat(String timestamp) {
-  // Convert the modem timestamp format to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
-  // Modem timestamp format: "yy/MM/dd,HH:mm:ss±zz"
-
-  String year = "20" + timestamp.substring(0, 2);
-  String month = timestamp.substring(3, 5);
-  String day = timestamp.substring(6, 8);
-  String time = timestamp.substring(9, 17);
-
-  String isoTimestamp = year + "-" + month + "-" + day + "T" + time + "Z";
-  return isoTimestamp;
 }
