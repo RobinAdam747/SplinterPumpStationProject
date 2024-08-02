@@ -25,37 +25,46 @@ void publishMessage() {
     observationValues.add(di);
   }
   serializeJson(doc, jsonBuffer);
+  delay(1000);
   Serial2.print(jsonBuffer);
 }
 
 String fetchTimestamp() {
-  // Send AT command to get the current timestamp
-  Serial2.print("AT+CCLK?");
-  Serial2.write(13);  // Send Carriage Return (CR)
-  delay(300);         // Wait for the modem to respond+++a
-
+  // Clear any previous data in the serial buffer
+  while (Serial2.available()) {
+    Serial2.read();
+  }
+  Serial2.println("usr.cn#AT+CCLK\r");  // Send AT command to get the current timestamp
+  delay(100);
   // Read the response
   String response = "";
-  while (Serial2.available()) {
-    char c = Serial2.read();
-    response += c;
+  long int time = millis();
+  while ((time + 500) > millis()) {
+    while (Serial2.available()) {
+      char c = Serial2.read();
+      response += c;
+    }
   }
-
+  response.trim();
   // Find the timestamp in the response
-  int startIndex = response.indexOf("\"");
-  int endIndex = response.indexOf("\"", startIndex + 1);
+  int index = response.indexOf("+CCLK: ");
+  if (index != -1) {
+    int startIndex = response.indexOf("\"", index);
+    int endIndex = response.indexOf("\"", startIndex + 1);
 
-  if (startIndex != -1 && endIndex != -1) {
-    String timestamp = response.substring(startIndex + 1, endIndex);
+    Serial2.print(response);
+    if (startIndex != -1 && endIndex != -1) {
+      String timestamp = response.substring(startIndex + 1, endIndex);
 
-    // Convert the modem timestamp format to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
-    // Modem timestamp format: "yy/MM/dd,HH:mm:ss±zz"
-    String year = "20" + timestamp.substring(0, 2);
-    String month = timestamp.substring(3, 5);
-    String day = timestamp.substring(6, 8);
-    String time = timestamp.substring(9, 17);
-    return year + "-" + month + "-" + day + "T" + time + "Z";
+      // Convert the modem timestamp format to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+      // Modem timestamp format: "yy/MM/dd,HH:mm:ss±zz"
+      String year = "20" + timestamp.substring(0, 2);
+      String month = timestamp.substring(3, 5);
+      String day = timestamp.substring(6, 8);
+      String time = timestamp.substring(9, 17);
+      return year + "-" + month + "-" + day + "T" + time + "Z";
+    }
   }
 
-  return "Timestamp not available";
+  return response;
 }

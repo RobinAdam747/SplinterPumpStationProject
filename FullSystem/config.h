@@ -5,8 +5,9 @@
 #define WELLPRO_SLAVE_ID 1
 #define WELLPRO_BAUD_RATE 9600
 #define MODEM_BAUD_RATE 115200
-#define RS485_RX_PIN 16
-#define RS485_TX_PIN 17
+#define MODEM_RX_PIN 16
+#define MODEM_TX_PIN 17
+#define MODEM_EN_PIN 5
 #define JSON_SIZE 2048
 
 // JSON Configuration
