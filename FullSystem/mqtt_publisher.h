@@ -7,4 +7,4 @@
 void publishMessage();
 String fetchTimestamp();
 
-#endif // MQTT_PUBLISHER_H
+#endif  // MQTT_PUBLISHER_H

@@ -53,7 +53,6 @@ String fetchTimestamp() {
 
     // Convert the modem timestamp format to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
     // Modem timestamp format: "yy/MM/dd,HH:mm:ss±zz"
-
     String year = "20" + timestamp.substring(0, 2);
     String month = timestamp.substring(3, 5);
     String day = timestamp.substring(6, 8);

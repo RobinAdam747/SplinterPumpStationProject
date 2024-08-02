@@ -25,7 +25,7 @@ const char* observationNames[] = {
   "Observation_Name_7",
   "Observation_Name_8"
 };
-float digitalInput[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+float digitalInput[8] = { -1, -1, -1, -1, -1, -1, -1, -1 };
 
 ModbusMaster node;  // Modbus Master instance
 
@@ -42,4 +42,3 @@ void loop() {
     publishMessage();
   delay(5000);
 }
-
