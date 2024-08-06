@@ -2,9 +2,13 @@
 #include "mqtt_publisher.h"
 #include "config.h"
 
-extern HardwareSerial Serial2;
+HardwareSerial Serial2(2);
 
 void publishMessage() {
+  // Set modem to MQTT mode
+  Serial2.println("usr.cn#AT+MODE=MQTT");
+  delay(300);
+
   char jsonBuffer[JSON_SIZE];
   StaticJsonDocument<JSON_SIZE> doc;
   // Define the JSON structure

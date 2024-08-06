@@ -2,8 +2,6 @@
   TODO:
   - Set loggerID value
   - Set observation names (Digital Input names)
-  - Implement thresholds
-  - Implement text messages and such
 */
 
 #include <ArduinoJson.h>
@@ -11,6 +9,7 @@
 #include "config.h"
 #include "wellpro.h"
 #include "mqtt_publisher.h"
+#include "modem_http.h"
 
 // Define the config variables
 const char* type = "Pump_Station_1";
@@ -26,8 +25,16 @@ const char* observationNames[] = {
   "Observation_Name_8"
 };
 float digitalInput[8] = { -1, -1, -1, -1, -1, -1, -1, -1 };
+const char* modemAPN = "your_modem_apn";
+const char* url = "https://graph.facebook.com/v18.0/160064393865630/messages";
+const char* token = "Bearer EAAMK9HvO62QBOy45ZCaErS2EivpUF3gZAFevfgb4EfNkZABNYp6ogmNPdMARai6HYgE2pRojL6TZAZCIyZC9EHxglc3mvOxCbN9lbHABv88oATTzA1olLpgYZBcncvB5g2sXZAtKeQyxn2UfZCM90y2YePh3uBFVL3wUMms9ZCXYsWmYtIUjmpbHpvKbrdt25wJLX9";
+const char* contentType = "application/json";
+const char* jsonData = "{ \"messaging_product\": \"whatsapp\", \"to\": \"27730860608\", \"type\": \"template\", \"template\": { \"name\": \"gateway_notifications\", \"language\": { \"code\": \"en\" } } }";
 
 ModbusMaster node;  // Modbus Master instance
+
+// Thresholds
+const float threshold[8] = { 1, 1, 1, 1, 1, 1, 1, 1 };
 
 void setup() {
   pinMode(MODEM_EN_PIN, OUTPUT);
@@ -42,5 +49,6 @@ void loop() {
   bool readSuccess = readWellPro();
   if (readSuccess)
     publishMessage();
+  checkThresholds();
   delay(5000);
 }

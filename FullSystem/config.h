@@ -1,3 +1,5 @@
+// config.h
+
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -18,4 +20,14 @@ extern const char* observationNames[8];
 // Digital Input data array
 extern float digitalInput[8];
 
-#endif  // CONFIG_H
+// Modem HTTP Request
+extern const char* modemAPN;
+extern const char* url;
+extern const char* token;
+extern const char* contentType;
+extern const char* jsonData;
+
+extern const float threshold[8];
+
+
+#endif // CONFIG_H
