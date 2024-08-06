@@ -2,8 +2,6 @@
 #include "mqtt_publisher.h"
 #include "config.h"
 
-HardwareSerial Serial2(2);
-
 void publishMessage() {
   // Set modem to MQTT mode
   Serial2.println("usr.cn#AT+MODE=MQTT");

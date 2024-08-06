@@ -4,28 +4,24 @@
 #include "modem_http.h"
 #include "config.h"
 
-HardwareSerial Serial2(2); // Use Serial2 for the modem
-
-bool initialiseModem() {
+void initialiseModem() {
 
   // Set APN
   Serial2.print("usr.cn#AT+CGDCONT=1,\"IP\",\"");
   Serial2.print(modemAPN);
   Serial2.println("\"");
-  if (!waitForResponse("OK")) return false;
+  if (!waitForResponse("OK")) return;
 
   // Connect to network
   Serial2.println("usr.cn#AT+CGATT=1");
-  if (!waitForResponse("OK")) return false;
+  if (!waitForResponse("OK")) return;
 
   // Set up HTTP mode
   Serial2.println("usr.cn#AT+HTTPINIT");
-  if (!waitForResponse("OK")) return false;
-
-  return true;
+  if (!waitForResponse("OK")) return;
 }
 
-void sendHttpPost(const char* url, const char* token, const char* contentType, const char* jsonData) {
+void sendHttpPost() {
   // Set HTTP parameters
   Serial2.println("usr.cn#AT+HTTPPARA=\"CID\",1");
   waitForResponse("OK");
@@ -70,7 +66,7 @@ void sendHttpPost(const char* url, const char* token, const char* contentType, c
 }
 
 bool waitForResponse(const char* expectedResponse) {
-  unsigned long timeout = millis() + 5000; // 5 seconds timeout
+  unsigned long timeout = millis() + 5000;  // 5 seconds timeout
   while (millis() < timeout) {
     if (Serial2.available()) {
       String response = Serial2.readString();
@@ -89,7 +85,7 @@ void checkThresholds() {
       // Initialize the modem
       initialiseModem();
       // Send the HTTP POST request
-      sendHttpPost(url, token, contentType, jsonData);
+      sendHttpPost();
     }
   }
 }

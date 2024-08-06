@@ -4,7 +4,7 @@
 #define MODEM_HTTP_H
 
 void initialiseModem();
-void sendHttpPost(const char* url, const char* token, const char* contentType, const char* jsonData);
+void sendHttpPost();
 bool waitForResponse(const char* expectedResponse);
 void checkThresholds();
 

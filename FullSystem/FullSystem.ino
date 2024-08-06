@@ -2,6 +2,7 @@
   TODO:
   - Set loggerID value
   - Set observation names (Digital Input names)
+  - waitForRespons in modem_http might not work as it needs to read the serial line. Might need to be replace with a delay.
 */
 
 #include <ArduinoJson.h>
