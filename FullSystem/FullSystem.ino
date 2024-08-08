@@ -35,7 +35,7 @@ const char* jsonData = "{ \"messaging_product\": \"whatsapp\", \"to\": \"2782341
 ModbusMaster node;  // Modbus Master instance
 
 // Thresholds
-const float threshold[8] = { 1, 1, 1, 1, 1, 1, 1, 1 };
+const float threshold[8] = { 1, 1, 1, 1, 1, 1, 1, -1 };
 
 void setup() {
   pinMode(MODEM_EN_PIN, OUTPUT);
