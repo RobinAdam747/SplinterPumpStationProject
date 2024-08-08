@@ -7,7 +7,7 @@
 void initialiseModem() {
 
   // Set APN
-  Serial2.println("usr.cn#AT+CGDCONT=1,\"IP\",\"" + modemAPN + "\"\r");
+  Serial2.println("usr.cn#AT+CGDCONT=1,\"IP\",\"" + String(modemAPN) + "\"\r");
   delay(200);
 
   // Connect to network
@@ -24,17 +24,17 @@ void sendHttpPost() {
   Serial2.println("usr.cn#AT+HTTPPARA=\"CID\",1\r");
   delay(200);
 
-  Serial2.println("usr.cn#AT+HTTPPARA=\"URL\",\""+url+"\"\r");
+  Serial2.println("usr.cn#AT+HTTPPARA=\"URL\",\"" + String(url) + "\"\r");
   delay(200);
 
-  Serial2.println("usr.cn#AT+HTTPPARA=\"USERDATA\",\"Authorization: " + token + "\"\r");
+  Serial2.println("usr.cn#AT+HTTPPARA=\"USERDATA\",\"Authorization: " + String(token) + "\"\r");
   delay(200);
 
-  Serial2.println("usr.cn#AT+HTTPPARA=\"CONTENT\",\"" + contentType + "\"\\r");
+  Serial2.println("usr.cn#AT+HTTPPARA=\"CONTENT\",\"" + String(contentType) + "\"\\r");
   delay(200);
 
   // Set data length
-  Serial2.println("usr.cn#AT+HTTPDATA="+jsonData+",10000\r");
+  Serial2.println("usr.cn#AT+HTTPDATA=" + String(jsonData) + ",10000\r");
   delay(200);
 
   // Send JSON data
