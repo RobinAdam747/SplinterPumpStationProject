@@ -51,7 +51,7 @@ void sendHttpPost() {
   delay(200);
 
   // Switch modem back to MQTT mode
-  Serial2.println("usr.cn#AT+MODE=MQTT\r");
+  Serial2.println("usr.cn#AT+WKMODE=MQTT\r");
   delay(200);
 }
 
