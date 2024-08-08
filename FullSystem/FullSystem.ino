@@ -30,7 +30,7 @@ const char* modemAPN = "your_modem_apn";
 const char* url = "https://graph.facebook.com/v18.0/160064393865630/messages";
 const char* token = "Bearer EAAMK9HvO62QBOy45ZCaErS2EivpUF3gZAFevfgb4EfNkZABNYp6ogmNPdMARai6HYgE2pRojL6TZAZCIyZC9EHxglc3mvOxCbN9lbHABv88oATTzA1olLpgYZBcncvB5g2sXZAtKeQyxn2UfZCM90y2YePh3uBFVL3wUMms9ZCXYsWmYtIUjmpbHpvKbrdt25wJLX9";
 const char* contentType = "application/json";
-const char* jsonData = "{ \"messaging_product\": \"whatsapp\", \"to\": \"27730860608\", \"type\": \"template\", \"template\": { \"name\": \"gateway_notifications\", \"language\": { \"code\": \"en\" } } }";
+const char* jsonData = "{ \"messaging_product\": \"whatsapp\", \"to\": \"27823412651\", \"type\": \"template\", \"template\": { \"name\": \"gateway_notifications\", \"language\": { \"code\": \"en\" } } }";
 
 ModbusMaster node;  // Modbus Master instance
 
