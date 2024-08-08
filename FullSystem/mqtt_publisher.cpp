@@ -40,13 +40,13 @@ String fetchTimestamp() {
   delay(100);
   // Read the response
   String response = "";
-  long int time = millis();
-  while ((time + 500) > millis()) {
-    while (Serial2.available()) {
-      char c = Serial2.read();
-      response += c;
-    }
-  }
+  // long int time = millis();
+  // while ((time + 500) > millis()) {
+  //   while (Serial2.available()) {
+  //     char c = Serial2.read();
+  //     response += c;
+  //   }
+  // }
   response.trim();
   // Find the timestamp in the response
   int index = response.indexOf("+CCLK: ");
@@ -54,7 +54,7 @@ String fetchTimestamp() {
     int startIndex = response.indexOf("\"", index);
     int endIndex = response.indexOf("\"", startIndex + 1);
 
-    Serial2.print(response);
+    //Serial2.print(response);
     if (startIndex != -1 && endIndex != -1) {
       String timestamp = response.substring(startIndex + 1, endIndex);
 
