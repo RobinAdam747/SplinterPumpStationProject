@@ -4,7 +4,7 @@
 
 void publishMessage() {
   // Set modem to MQTT mode
-  Serial2.println("usr.cn#AT+MODE=MQTT");
+  Serial2.println("usr.cn#AT+WKMODE=MQTT");
   delay(300);
 
   char jsonBuffer[JSON_SIZE];
